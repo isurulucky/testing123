@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e0008a2b-b61c-4b5e-9404-ea4027efb05b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-    </list>
+    <list default="true" id="e0008a2b-b61c-4b5e-9404-ea4027efb05b" name="Default" comment="" />
     <ignored path="testing123.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -28,7 +26,7 @@
         <entry file="file://$PROJECT_DIR$/docker/build.sh">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="29" column="24" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+              <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -38,7 +36,7 @@
         <entry file="file://$PROJECT_DIR$/docker/run.sh">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="32" column="18" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+              <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -104,7 +102,7 @@
         <entry file="file://$PROJECT_DIR$/test.sh">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="175" column="13" selection-start-line="165" selection-start-column="8" selection-end-line="175" selection-end-column="10" />
+              <caret line="175" column="10" selection-start-line="165" selection-start-column="8" selection-end-line="175" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -931,16 +929,16 @@
       <created>1457522607339</created>
       <option name="number" value="Default" />
       <updated>1457522607339</updated>
-      <workItem from="1457522608568" duration="7842000" />
+      <workItem from="1457522608568" duration="9627000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7842000" />
+    <option name="totallyTimeSpent" value="9627000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="55" y="14" width="1875" height="1076" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -1015,7 +1013,7 @@
     <entry file="file://$PROJECT_DIR$/docker/run.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="32" column="18" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+          <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1023,7 +1021,7 @@
     <entry file="file://$PROJECT_DIR$/docker/build.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="29" column="24" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1031,7 +1029,7 @@
     <entry file="file://$PROJECT_DIR$/test.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="175" column="13" selection-start-line="165" selection-start-column="8" selection-end-line="175" selection-end-column="10" />
+          <caret line="175" column="10" selection-start-line="165" selection-start-column="8" selection-end-line="175" selection-end-column="10" />
           <folding />
         </state>
       </provider>
