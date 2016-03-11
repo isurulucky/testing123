@@ -52,7 +52,7 @@ user=`whoami`
 echo "user executing the script $user"
 
 # products to be tested
-products=(wso2dss,3.5.0,manager wso2dss,3.5.0,worker)
+products=(wso2das,3.0.1,default)
 declare -A results
 
 function echoError {
@@ -227,11 +227,11 @@ function print_results {
     for product in ${products[@]}; do
         IFS=","
         set ${product}
-        test_result=${results[$1-$2]}
+        test_result=${results[$1-$2-$3]}
         if [[ ${test_result} == ERROR* ]]; then
-            echoError "$1-$2: ${test_result}"
+            echoError "$1-$2-$3: ${test_result}"
         else
-            echoSuccess "$1-$2: ${test_result}"
+            echoSuccess "$1-$2-$3: ${test_result}"
         fi
         unset IFS
     done
