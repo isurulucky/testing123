@@ -26,11 +26,13 @@
 #   https://github.com/pires/kubernetes-vagrant-coreos-cluster              #
 #                                                                           #
 #   Usage:                                                                  #
-#   1. set PUPPET_HOME, KUBERNETES_NODE_USER and KUBERNETES_NODE            #
-#      in environment.bash                                                  #
-#   2. add the products and version that need to be tested to the array     #
-#      'products' as comma separated tuples.                                #
-#       ex.: products=(wso2am,1.9.1 wso2is,5.0.0)                           #
+#   1. set PUPPET_HOME, KUBERNETES_NODE_USER, KUBERNETES_NODE,              #
+#      DOCKERFILES_HOME and KUBERNETES_HOME in environment.bash             #                                                                                                #
+#                                                                           #
+#   2. add the products, versions and profiles that need to be tested       #
+#      to the array 'products' as comma separated tuples.                   #
+#      ex.: products=(wso2am,1.9.1,default wso2is,5.0.0,manager)            #
+#                                                                           #
 #   3. run the script                                                       #
 #                                                                           #
 #                                                                           #
@@ -52,7 +54,7 @@ user=`whoami`
 echo "user executing the script $user"
 
 # products to be tested
-products=(wso2am,1.9.1,default)
+products=(wso2am,1.9.1,default wso2das,3.0.1,default wso2is,5.1.0,default)
 declare -A results
 
 function echoError {
@@ -80,7 +82,7 @@ function build_base_image {
 function build_docker_image_and_scp {
     # switch to IS 5 docker directory and build
     pushd ${DOCKERFILES_HOME}/$1 > /dev/null
-    sudo --preserve-env bash build.sh -v "$2" -i ${kubernetes_artifact_version} -l "$3" || cleanup
+    sudo --preserve-env bash build.sh -v "$2" -i ${kubernetes_artifact_version} -l "$3" <<< 'y' || cleanup
     # save the image as a tar file
     sudo bash save.sh -v "$2" -i ${kubernetes_artifact_version} -l "$3" || cleanup
     sudo chown ${user}:${user} -R ~/docker/
@@ -224,7 +226,7 @@ function test {
         echo "deploying kubernetes RC for=$1 version=$2 profile=$3"
         deploy_kubernetes_rc "$1" "$3"
         check_status "$1" "$2" "$3"
-#        echo "undeploying kubernetes artifacts for=$1 version=$2 profile=$3"
+        echo "undeploying kubernetes artifacts for=$1 version=$2 profile=$3"
         undeploy_kubernetes_artifacts "$1"
         unset IFS
     done
