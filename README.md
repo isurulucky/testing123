@@ -3,9 +3,9 @@ scp them to the Kubernetes nodes and deploy the Kubernetes artifacts.
 
 Uses the following github repositories: 
 
-https://github.com/wso2/puppet-modules
-https://github.com/wso2/dockerfiles.git
-https://github.com/wso2/kubernetes-artifacts
++ https://github.com/wso2/puppet-modules
++ https://github.com/wso2/dockerfiles.git
++ https://github.com/wso2/kubernetes-artifacts
                                                                        
 Tested with the Kubernetes setup at:                                   
 https://github.com/pires/kubernetes-vagrant-coreos-cluster             
