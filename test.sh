@@ -44,15 +44,15 @@ source ~/.bash_profile
 
 prgdir=`dirname "$0"`
 current_path=`cd "$prgdir"; pwd`
-root_dir=${current_path}/..
-common_dir=${current_path}/../common
-base_image_dir=`cd "${common_dir}/docker/base-image"; pwd`
+#root_dir=${current_path}/..
+#common_dir=${current_path}/../common
+#base_image_dir=`cd "${common_dir}/docker/base-image"; pwd`
 
 user=`whoami`
 echo "user executing the script $user"
 
 # products to be tested
-products=(wso2das,3.0.1,default)
+products=(wso2am,1.9.1,default)
 declare -A results
 
 function echoError {
@@ -70,7 +70,7 @@ function echoBold {
 # build base image
 function build_base_image {
     # navigate to base image dir
-    pushd ${base_image_dir} > /dev/null
+    pushd ${DOCKERFILES_HOME}/common/base-image > /dev/null
     # build
     # sudo bash build.sh ${kubernetes_artifact_version}
     # go back to previous directory location
@@ -79,30 +79,31 @@ function build_base_image {
 
 function build_docker_image_and_scp {
     # switch to IS 5 docker directory and build
-    pushd ${root_dir}/$1/docker > /dev/null
-    sudo --preserve-env bash build.sh "$2" ${kubernetes_artifact_version} "$3" || cleanup
+    pushd ${DOCKERFILES_HOME}/$1 > /dev/null
+    sudo --preserve-env bash build.sh -v "$2" -i ${kubernetes_artifact_version} -l "$3" || cleanup
     # save the image as a tar file
-    sudo bash save.sh "$2" ${kubernetes_artifact_version} "$3" || cleanup
+    sudo bash save.sh -v "$2" -i ${kubernetes_artifact_version} -l "$3" || cleanup
     sudo chown ${user}:${user} -R ~/docker/
-    bash scp.sh ${KUBERNETES_NODE_USER}@${KUBERNETES_NODE} "$2" ${kubernetes_artifact_version} "$3" || cleanup
+    bash scp.sh -h ${KUBERNETES_NODE_USER}@${KUBERNETES_NODE} -v "$2" -i ${kubernetes_artifact_version} -l "$3" || cleanup
     popd > /dev/null
 }
 
 function undeploy_kubernetes_artifacts {
     # switch to IS 5 kubernetes directory deploy kubernetes artifacts
-    pushd ${root_dir}/$1/kubernetes > /dev/null
+    pushd ${KUBERNETES_HOME}/$1 > /dev/null
+    pushd ${KUBERNETES_HOME}/$1 > /dev/null
     bash undeploy.sh
     popd > /dev/null
 }
 
 function deploy_kubernetes_service {
     # switch to IS 5 kubernetes directory deploy kubernetes artifacts
-    bash ${common_dir}/scripts/kubernetes/deploy-kubernetes-service.sh "$1" "$2" || cleanup
+    bash ${KUBERNETES_HOME}/common/scripts/deploy-kubernetes-service.sh "$1" "$2" || cleanup
 }
 
 function deploy_kubernetes_rc {
     # switch to IS 5 kubernetes directory deploy kubernetes artifacts
-    bash ${common_dir}/scripts/kubernetes/deploy-kubernetes-rc.sh "$1" "$2" || cleanup
+    bash ${KUBERNETES_HOME}/common/scripts/deploy-kubernetes-rc.sh "$1" "$2" || cleanup
 }
 
 
@@ -181,6 +182,14 @@ function validate_environment {
         echo "please set environment variable PUPPET_HOME"
         exit
     fi
+    if [ -z "$DOCKERFILES_HOME" ]; then
+        echo "please set environment variable DOCKERFILES_HOME"
+        exit
+    fi
+    if [ -z "$KUBERNETES_HOME" ]; then
+        echo "please set environment variable KUBERNETES_HOME"
+        exit
+    fi
     if [ -z "$KUBERNETES_NODE" ]; then
         echo "please set environment variable KUBERNETES_NODE"
         exit
@@ -193,13 +202,13 @@ function validate_environment {
 
 function test {
     # build and scp
-#    for product in ${products[@]}; do
-#        IFS=","
-#        set ${product}
-#        echo "building docker image for=$1  version=$2 profile=$3"
-#        build_docker_image_and_scp "$1" "$2" "$3"
-#        unset IFS
-#    done
+    for product in ${products[@]}; do
+        IFS=","
+        set ${product}
+        echo "building docker image for=$1  version=$2 profile=$3"
+        build_docker_image_and_scp "$1" "$2" "$3"
+        unset IFS
+    done
     # deploy all Services
     for product in ${products[@]}; do
         IFS=","
@@ -216,7 +225,7 @@ function test {
         deploy_kubernetes_rc "$1" "$3"
         check_status "$1" "$2" "$3"
 #        echo "undeploying kubernetes artifacts for=$1 version=$2 profile=$3"
-#        undeploy_kubernetes_artifacts "$1"
+        undeploy_kubernetes_artifacts "$1"
         unset IFS
     done
 }
@@ -247,6 +256,7 @@ function cleanup {
         undeploy_kubernetes_artifacts "$1"
         unset IFS
     done
+    exit 1
 }
 
 # validate
